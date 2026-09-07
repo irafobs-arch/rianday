@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hidden Birthday Game — Rian</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #fff1f5, #e8f4ff);
+    color: #334155;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+  .card {
+    width: min(520px, 100%);
+    background: rgba(255,255,255,.94);
+    border-radius: 28px;
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 18px 55px rgba(80, 90, 130, .18);
+    position: relative;
+    overflow: hidden;
+  }
+  .sparkle { position:absolute; font-size: 24px; animation: float 3s infinite ease-in-out; }
+  .s1 { top:15px; left:20px; } .s2 { top:30px; right:25px; animation-delay:1s; }
+  .s3 { bottom:20px; left:25px; animation-delay:1.5s; } .s4 { bottom:15px; right:25px; animation-delay:.5s; }
+  @keyframes float { 50% { transform: translateY(-8px) rotate(10deg); } }
+  h1 { color:#e85d8b; margin: 8px 0; font-size: clamp(28px, 8vw, 42px); }
+  h2 { color:#64748b; font-size: 19px; margin-top: 8px; }
+  p { line-height: 1.7; }
+  .hidden { display:none; }
+  .btn {
+    border:0; border-radius:999px; padding:13px 21px; margin:8px 4px;
+    background:#f472a5; color:white; font-weight:700; cursor:pointer;
+    transition:.2s; box-shadow:0 5px 12px rgba(244,114,165,.25);
+  }
+  .btn:hover { transform:translateY(-2px); background:#e85d8b; }
+  .btn.secondary { background:#94a3b8; }
+  input {
+    width:85%; max-width:300px; padding:13px 16px; border:2px solid #fbcfe8;
+    border-radius:14px; outline:none; text-align:center; font-size:16px;
+  }
+  input:focus { border-color:#f472a5; }
+  .hint { font-size:13px; color:#94a3b8; }
+  .message {
+    background:#fff7fb; border:1px dashed #f9a8d4; border-radius:20px;
+    padding:18px; margin-top:18px; text-align:left;
+  }
+  .message strong { color:#e85d8b; }
+  .progress { font-size:13px; color:#94a3b8; margin-bottom:10px; }
+  .choice {
+    display:block; width:100%; margin:10px 0; padding:14px;
+    border:2px solid #e2e8f0; border-radius:14px; background:white;
+    cursor:pointer; text-align:left; font-size:15px;
+  }
+  .choice:hover { border-color:#f9a8d4; background:#fff7fb; }
+  .heart {
+    position:fixed; bottom:-30px; font-size:22px; pointer-events:none;
+    animation: rise 4s linear forwards;
+  }
+  @keyframes rise {
+    to { transform: translateY(-110vh) rotate(360deg); opacity:0; }
+  }
+  .footer { margin-top:20px; font-size:12px; color:#a1a1aa; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="sparkle s1">✨</div>
+  <div class="sparkle s2">🎈</div>
+  <div class="sparkle s3">🌷</div>
+  <div class="sparkle s4">🎂</div>
+
+  <section id="start">
+    <div style="font-size:58px">🎁</div>
+    <h1>Hai, Rian!</h1>
+    <h2>Ada hadiah kecil yang harus kamu unlock dulu...</h2>
+    <p>Tenang, bukan ujian. Cuma game receh dari seseorang yang ingin mengucapkan sesuatu. 😌</p>
+    <button class="btn" onclick="show('clue')">Mulai Game</button>
+  </section>
+
+  <section id="clue" class="hidden">
+    <div class="progress">Level 1 dari 3</div>
+    <h2>🔐 Tebak Password</h2>
+    <p>Petunjuk: tanggal yang paling cocok untuk makan kue, menerima doa, dan pura-pura tidak tambah umur. 😂</p>
+    <input id="password" placeholder="Masukkan password">
+    <br>
+    <button class="btn" onclick="checkPassword()">Unlock</button>
+    <p class="hint">Hint: tanggal ulang tahunmu, format DDMM</p>
+    <p id="passMsg"></p>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="progress">Level 2 dari 3</div>
+    <h2>🧠 Pertanyaan Penting</h2>
+    <p>Kalau perjalanan terasa panjang, apa yang paling dibutuhkan?</p>
+    <button class="choice" onclick="wrong()">A. Drama tambahan</button>
+    <button class="choice" onclick="wrong()">B. Beban pikiran baru</button>
+    <button class="choice" onclick="correct()">C. Istirahat, semangat, dan orang-orang baik</button>
+    <p id="quizMsg"></p>
+  </section>
+
+  <section id="final" class="hidden">
+    <div style="font-size:62px">🎉</div>
+    <h1>Happy Birthday, Rian!</h1>
+    <div class="message">
+      <p>Selamat ulang tahun ya, Yan. 🤍</p>
+      <p>Semoga selalu diberi kesehatan, dimudahkan semua proses yang sedang kamu jalani, dan semoga tahun ini membawa banyak hal baik untukmu.</p>
+      <p>Semangat buat perjalanan dan kontrolnya. Semoga semuanya berjalan lancar, satu per satu, sampai tujuan yang kamu harapkan tercapai.</p>
+      <p>Ini cuma hadiah kecil, tapi semoga bisa bikin kamu sedikit lebih nyaman dan semangat.</p>
+      <p><strong>Jangan lupa istirahat dan bahagia juga. 😊</strong></p>
+      <p style="text-align:center; margin-bottom:0;">— Dari teman yang suka bikin game receh 🎮</p>
+    </div>
+    <button class="btn" onclick="celebrate()">Klik kalau sudah tersenyum 😆</button>
+    <p id="celebrateMsg"></p>
+  </section>
+
+  <div class="footer">Made with a little care and a lot of courage 🤍</div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+function checkPassword() {
+  const value = document.getElementById('password').value.trim().replace(/\\s/g,'');
+  const msg = document.getElementById('passMsg');
+  if (value === '0409' || value === '4September' || value === '04September') {
+    msg.textContent = 'Password benar! Kamu memang tokoh utama hari ini. 😎';
+    msg.style.color = '#16a34a';
+    setTimeout(() => show('quiz'), 900);
+  } else {
+    msg.textContent = 'Belum tepat, Yan. Coba ingat tanggal ulang tahunmu. 😂';
+    msg.style.color = '#e11d48';
+  }
+}
+function wrong() {
+  document.getElementById('quizMsg').textContent = 'Jawaban ini justru bikin perjalanan makin berat. Coba lagi. 😂';
+  document.getElementById('quizMsg').style.color = '#e11d48';
+}
+function correct() {
+  document.getElementById('quizMsg').textContent = 'Jawaban benar! Hadiah berhasil dibuka. 🎁';
+  document.getElementById('quizMsg').style.color = '#16a34a';
+  setTimeout(() => show('final'), 900);
+}
+function celebrate() {
+  document.getElementById('celebrateMsg').textContent = 'Nah, gitu dong. Semoga harinya menyenangkan! 🎂🤍';
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = ['🤍','💗','✨','🎈'][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.animationDelay = Math.random()*.8 + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>

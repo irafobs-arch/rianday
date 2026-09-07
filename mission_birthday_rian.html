@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Birthday Rian</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:20px;display:flex;align-items:center;justify-content:center;
+ font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fce7f3);
+ color:#263244
+}
+.box{
+ width:min(560px,100%);background:#fff;border-radius:26px;padding:28px 22px;
+ box-shadow:0 15px 45px #64748b40;text-align:center;position:relative
+}
+.badge{display:inline-block;background:#fef3c7;color:#92400e;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:bold}
+h1{font-size:clamp(30px,8vw,46px);margin:14px 0 5px;color:#2563eb}
+h2{color:#db2777;margin:12px 0}
+p{line-height:1.65}
+.btn{
+ border:0;border-radius:13px;padding:13px 20px;margin:7px;background:#2563eb;color:white;
+ font-weight:bold;cursor:pointer;transition:.2s
+}
+.btn:hover{transform:translateY(-2px);background:#1d4ed8}
+.btn.pink{background:#db2777}.btn.gray{background:#64748b}
+.hidden{display:none}
+input{
+ padding:13px;border:2px solid #bfdbfe;border-radius:12px;text-align:center;
+ font-size:16px;width:90%;max-width:320px
+}
+.option{
+ display:block;width:100%;padding:14px;margin:9px 0;background:#f8fafc;
+ border:2px solid #e2e8f0;border-radius:13px;text-align:left;cursor:pointer
+}
+.option:hover{border-color:#93c5fd;background:#eff6ff}
+.note{background:#fff1f2;border-radius:18px;padding:18px;text-align:left;margin-top:15px}
+.small{font-size:13px;color:#64748b}
+.confetti{position:fixed;top:-20px;font-size:24px;animation:fall 3.5s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(500deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="box">
+ <div id="home">
+  <div style="font-size:64px">🕵️‍♂️🎂</div>
+  <span class="badge">BIRTHDAY SECRET MISSION</span>
+  <h1>Mission: Rian</h1>
+  <p>Seorang manusia sedang bertambah usia. Untuk membuka pesan rahasia, kamu harus menyelesaikan misi kecil ini.</p>
+  <button class="btn pink" onclick="go('mission1')">Terima Misi 🚀</button>
+ </div>
+
+ <div id="mission1" class="hidden">
+  <div class="small">MISI 1 / 3</div>
+  <h2>🔎 Cari Kode Rahasia</h2>
+  <p>Kode rahasianya adalah tanggal ulang tahunmu, tanpa spasi.</p>
+  <input id="code" placeholder="Contoh: 0409">
+  <br>
+  <button class="btn" onclick="checkCode()">Buka Kode</button>
+  <p id="codeMsg"></p>
+ </div>
+
+ <div id="mission2" class="hidden">
+  <div class="small">MISI 2 / 3</div>
+  <h2>🎒 Pilih Bekal Perjalanan</h2>
+  <p>Kalau harus bolak-balik perjalanan jauh, mana yang paling berguna?</p>
+  <button class="option" onclick="wrong()">A. Beban pikiran tambahan</button>
+  <button class="option" onclick="wrong()">B. Drama kantor 24 jam</button>
+  <button class="option" onclick="right()">C. Istirahat, semangat, dan bantal yang nyaman</button>
+  <p id="choiceMsg"></p>
+ </div>
+
+ <div id="mission3" class="hidden">
+  <div class="small">MISI TERAKHIR</div>
+  <h2>💌 Satu Pertanyaan</h2>
+  <p>Apakah kamu siap menerima ucapan dari seseorang yang kadang sok cuek tapi sebenarnya perhatian?</p>
+  <button class="btn pink" onclick="finish()">Siap, buka! 😎</button>
+ </div>
+
+ <div id="result" class="hidden">
+  <div style="font-size:70px">🎉🎂🎁</div>
+  <h1>Happy Birthday, Rian!</h1>
+  <div class="note">
+   <p><b>Selamat ulang tahun ya, Yan.</b> 🤍</p>
+   <p>Semoga selalu diberi kesehatan, dimudahkan semua proses yang sedang kamu jalani, dan semoga tahun ini membawa banyak hal baik untukmu.</p>
+   <p>Semoga perjalanan dan kontrolnya lancar, diberi kekuatan, dan selalu dikelilingi orang-orang yang tulus mendukungmu.</p>
+   <p>Ini cuma hadiah kecil. Semoga bisa menemani perjalananmu dan membuatmu sedikit lebih nyaman.</p>
+   <p><b>Jangan lupa istirahat, jangan lupa bahagia juga. 😊</b></p>
+   <p style="text-align:center;margin-bottom:0">Semoga semua harapan baikmu pelan-pelan menjadi nyata. ✨</p>
+  </div>
+  <button class="btn" onclick="party()">Klik untuk menerima doa tambahan 🤍</button>
+  <p id="partyMsg"></p>
+ </div>
+ <div class="small" style="margin-top:20px">A tiny game made with good wishes.</div>
+</div>
+
+<script>
+function go(id){
+ document.querySelectorAll('.box > div').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+}
+function checkCode(){
+ let v=document.getElementById('code').value.toLowerCase().replace(/\\s/g,'');
+ let m=document.getElementById('codeMsg');
+ if(v==='0409'||v==='4september'||v==='04september'){
+  m.textContent='Kode benar! Agen Rian berhasil melewati misi pertama. 😎';
+  m.style.color='#16a34a';setTimeout(()=>go('mission2'),800);
+ }else{
+  m.textContent='Hmm, belum tepat. Ingat tanggal ulang tahunmu ya. 😂';
+  m.style.color='#dc2626';
+ }
+}
+function wrong(){
+ let m=document.getElementById('choiceMsg');
+ m.textContent='Jawaban itu bisa membuat perjalanan makin melelahkan. Coba lagi. 😂';
+ m.style.color='#dc2626';
+}
+function right(){
+ let m=document.getElementById('choiceMsg');
+ m.textContent='Benar! Kamu resmi naik level. 🎮';
+ m.style.color='#16a34a';setTimeout(()=>go('mission3'),800);
+}
+function finish(){go('result')}
+function party(){
+ document.getElementById('partyMsg').textContent='Doa tambahannya: semoga hari-harimu lebih ringan, hatimu lebih tenang, dan senyummu lebih sering muncul. 🤍';
+ for(let i=0;i<28;i++){
+  let c=document.createElement('div');c.className='confetti';
+  c.textContent=['✨','🤍','🎈','🎉','🌟'][Math.floor(Math.random()*5)];
+  c.style.left=Math.random()*100+'vw';c.style.animationDelay=Math.random()*.8+'s';
+  document.body.appendChild(c);setTimeout(()=>c.remove(),4500);
+ }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operasi Rahasia: Rian</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#101820;color:#e8edf2;font-family:Arial,sans-serif;display:flex;justify-content:center;align-items:center;padding:18px}
+.card{width:100%;max-width:560px;background:#19242e;border:1px solid #334452;border-radius:18px;overflow:hidden;box-shadow:0 15px 40px #0008}
+.header{background:#0d141b;padding:20px;border-bottom:1px solid #334452}
+.header h3{margin:0;color:#9bd0ff;font-size:17px}.header p{margin:7px 0 0;color:#91a2b0;font-size:12px}
+.page{padding:28px 23px;text-align:center;animation:in .45s ease}.hidden{display:none}
+h1{font-size:27px;color:#fff;margin:10px 0}h2{font-size:21px;color:#9bd0ff}p{line-height:1.65;color:#c6d0d8;font-size:15px}
+.icon{font-size:54px;margin-bottom:8px}.box{background:#111a22;border:1px solid #344654;border-radius:12px;padding:17px;margin:18px 0;text-align:left;line-height:1.7;color:#cbd5dd}
+button{background:#9bd0ff;color:#10202c;border:0;border-radius:9px;padding:13px 20px;margin:7px;font-weight:bold;font-size:14px;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.option{display:block;width:100%;background:#24333f;color:#dce8f0;border:1px solid #405363;text-align:left}.option:hover{background:#304452}
+input{width:85%;padding:13px;border-radius:9px;border:1px solid #526777;background:#101820;color:#fff;text-align:center;font-size:16px}
+.feedback{min-height:24px;color:#9bd0ff;font-weight:bold}.progress{height:7px;background:#334452;border-radius:20px;overflow:hidden;margin:20px 0}.bar{height:100%;width:0;background:#9bd0ff;transition:1s}
+.terminal{background:#090e12;color:#9cffb0;text-align:left;border-radius:10px;padding:15px;font-family:monospace;font-size:13px;line-height:1.8;margin:18px 0}
+.letter{background:#f2f5f7;color:#26323b;border-radius:14px;padding:23px;text-align:left}.letter h1,.letter h2{text-align:center;color:#1b536f}.letter p{color:#34434e;font-size:15px}.signature{text-align:center;font-weight:bold;margin-top:22px}
+.confetti{position:fixed;top:-20px;font-size:23px;animation:fall linear forwards;pointer-events:none}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="header"><h3>OPERATION: RIAN_01</h3><p>Confidential access • Jangan terlalu serius, ini bukan audit.</p></div>
+
+<div id="p0" class="page">
+<div class="icon">🕶️</div><h1>MISSION BRIEFING</h1>
+<p>Halo, Rian. Kamu terpilih untuk menjalankan satu operasi sederhana.</p>
+<div class="box"><b>Target:</b> membuka sebuah pesan rahasia.<br><b>Tingkat kesulitan:</b> seharusnya gampang.<br><b>Risiko:</b> cuma sedikit buang waktu.<br><b>Catatan:</b> kalau kamu cuek, sistem akan tersinggung.</div>
+<button onclick="show('p1')">MULAI OPERASI</button>
+</div>
+
+<div id="p1" class="page hidden">
+<div class="icon">⚡</div><h2>MISSION 01 — REFLEKS</h2>
+<p>Pilih jawaban sebelum kamu berubah pikiran.</p>
+<div class="box"><b>Kalau ada orang bilang “ada sesuatu buat kamu”, respons paling Rian adalah...</b></div>
+<button class="option" onclick="advance('p2','Jawaban masuk akal. Terlalu masuk akal malah.')">A. “Apaan?”</button>
+<button class="option" onclick="advance('p2','Khas. Singkat, padat, cuek.')">B. “Oh.”</button>
+<button class="option" onclick="advance('p2','Sistem mencatat: masih manusia normal.')">C. “Mana?”</button>
+<p id="f1" class="feedback"></p>
+</div>
+
+<div id="p2" class="page hidden">
+<div class="icon">💻</div><h2>MISSION 02 — SYSTEM CHECK</h2>
+<p>Jangan tutup halaman. Sistem sedang membaca tingkat kesabaranmu.</p>
+<div class="terminal" id="terminal">> booting operation...<br>> checking patience...<br>> detecting curiosity...</div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<button onclick="runCheck()">LANJUTKAN PEMERIKSAAN</button>
+</div>
+
+<div id="p3" class="page hidden">
+<div class="icon">🎯</div><h2>MISSION 03 — PILIH YANG PALING JUJUR</h2>
+<p>Jawaban ini tidak memengaruhi masa depan. Mungkin.</p>
+<div class="box"><b>Hal yang paling susah dilakukan saat ulang tahun adalah...</b></div>
+<button class="option" onclick="advance('p4','Benar. Istirahat itu penting.')">A. Mengingat umur sendiri</button>
+<button class="option" onclick="advance('p4','Sangat realistis.')">B. Membalas semua ucapan</button>
+<button class="option" onclick="advance('p4','Jawaban yang sangat Rian.')">C. Bilang “makasih” lalu menghilang</button>
+<p class="feedback"></p>
+</div>
+
+<div id="p4" class="page hidden">
+<div class="icon">🧠</div><h2>MISSION 04 — TES INGATAN</h2>
+<p>Ingat angka ini selama 3 detik:</p>
+<h1 id="number">27</h1>
+<p id="count">3</p>
+<button id="memoryBtn" onclick="memoryStart()">SAYA SIAP</button>
+<div id="memoryQuestion" class="hidden">
+<p>Angka tadi berapa?</p>
+<input id="memoryInput" placeholder="Masukkan angka">
+<br><button onclick="checkMemory()">CEK JAWABAN</button>
+<p id="memoryFeedback" class="feedback"></p>
+</div>
+</div>
+
+<div id="p5" class="page hidden">
+<div class="icon">📡</div><h2>MISSION 05 — TRANSMISI PESAN</h2>
+<p>Pesan berikut telah diacak. Pilih terjemahan yang benar.</p>
+<div class="box"><b>“Semoga tahun ini lebih baik.”</b></div>
+<button class="option" onclick="wrong(this)">A. Semoga tahun ini tambah ribet.</button>
+<button class="option" onclick="wrong(this)">B. Semoga makin banyak drama.</button>
+<button class="option" onclick="advance('p6','Transmisi berhasil. Pesan diterima.')">C. Semoga banyak kabar baik dan kesehatan.</button>
+<p class="feedback"></p>
+</div>
+
+<div id="p6" class="page hidden">
+<div class="icon">🔐</div><h2>MISSION 06 — FINAL ACCESS</h2>
+<p>Masukkan kode untuk membuka pesan terakhir.</p>
+<div class="box">Petunjuk: nama panggilan orang yang sedang menjalankan operasi ini.</div>
+<input id="code" placeholder="Kode rahasia"><br>
+<button onclick="checkCode()">BUKA PESAN</button>
+<p id="codeFeedback" class="feedback"></p>
+</div>
+
+<div id="final" class="page hidden">
+<div class="icon">🎂</div>
+<div class="letter">
+<h1>Happy Birthday, Rian! 🎂🎉</h1>
+<h2>Selamat ulang tahun, Yan!</h2>
+<p>Semoga di usia yang baru ini kamu selalu diberi kesehatan, kekuatan, dan kemudahan dalam setiap proses yang sedang kamu jalani.</p>
+<p>Semoga perjalanan kontrolnya dilancarkan, selalu dikelilingi orang-orang baik, dan semakin banyak kabar bahagia yang datang.</p>
+<p>Terima kasih sudah jadi teman yang kadang ngeselin, kadang bikin ketawa, tapi tetap jadi bagian dari cerita seru kita. Wkwkwk 🤣</p>
+<p><b>Sehat-sehat terus ya, Yan. Jangan lupa istirahat, jangan kebanyakan cuek, dan semoga tahun ini jadi tahun yang lebih baik buat kamu. 🤍</b></p>
+<p>Semoga langkahmu selalu dimudahkan, hatimu diberi tenang, dan hari-harimu diisi lebih banyak hal baik daripada hal yang bikin capek.</p>
+<div class="signature">Selamat bertambah usia.<br>Semoga tetap kuat, tetap sehat, dan tetap jadi Rian yang kami kenal. 🫶</div>
+</div>
+<p style="color:#9bd0ff">OPERATION COMPLETE. Target berhasil dibuat tersenyum.</p>
+</div>
+</div>
+
+<script>
+function hide(){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'))}
+function show(id){hide();document.getElementById(id).classList.remove('hidden')}
+function advance(id,msg){show(id);let f=document.querySelector('#'+id+' .feedback');if(f)f.textContent=msg}
+function wrong(b){b.textContent='✖ Bukan itu. Coba lagi.';b.style.background='#6b3945';setTimeout(()=>{b.textContent='Coba lagi';b.style.background='#24333f'},900)}
+function runCheck(){document.getElementById('bar').style.width='100%';let t=document.getElementById('terminal');t.innerHTML='> booting operation... OK<br>> checking patience... OK<br>> detecting curiosity... HIGH<br>> result: penerima terlalu penasaran.<br>> proceeding...';setTimeout(()=>show('p3'),1800)}
+function memoryStart(){document.getElementById('memoryBtn').disabled=true;let n=document.getElementById('count');let c=3;let timer=setInterval(()=>{c--;n.textContent=c;if(c<=0){clearInterval(timer);document.getElementById('number').textContent='?';document.getElementById('memoryQuestion').classList.remove('hidden');}},1000)}
+function checkMemory(){let v=document.getElementById('memoryInput').value.trim();if(v==='27'){document.getElementById('memoryFeedback').textContent='Benar. Otak masih berfungsi. Lanjut.';setTimeout(()=>show('p5'),1000)}else document.getElementById('memoryFeedback').textContent='Salah. Tapi tidak apa-apa, ini bukan ujian.'}
+function checkCode(){let v=document.getElementById('code').value.trim().toLowerCase();if(['rian','yan'].includes(v)){show('final');celebrate()}else document.getElementById('codeFeedback').textContent='Kode salah. Petunjuknya: nama kamu sendiri 😭'}
+function celebrate(){let a=['🎉','🎂','✨','🤍','🥳','🎈'];for(let i=0;i<55;i++){let x=document.createElement('div');x.className='confetti';x.textContent=a[Math.floor(Math.random()*a.length)];x.style.left=Math.random()*100+'vw';x.style.animationDuration=(Math.random()*3+2)+'s';document.body.appendChild(x);setTimeout(()=>x.remove(),6000)}}
+</script>
+</body>
+</html>
